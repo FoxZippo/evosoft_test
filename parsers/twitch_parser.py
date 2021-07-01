@@ -1,9 +1,3 @@
-# 2. Поиск результатов Twitch (среднее).
-# Повторить действия пользователя по вводу запроса "Pool" (ну или свой по желанию) в строку поиска.
-# Получить результаты предпросмотра поискового запроса
-# (подcказки перед отправкой запроса поиска) и результаты самого поиска.
-# Из результатов поиска достать все ссылки и вывести в лог.
-
 import logging
 import random
 import time
@@ -20,7 +14,7 @@ ACCEPT_HEADER = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/web
 
 logger = logging.getLogger('seleniumwire')
 logger.setLevel(logging.WARNING)
-logging.basicConfig(filename='twitch_pools.log', level=logging.INFO)
+logging.basicConfig(filename='../twitch_pools.log', level=logging.INFO)
 
 
 def interceptor(request):
