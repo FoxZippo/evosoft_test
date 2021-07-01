@@ -7,23 +7,14 @@ from selenium.webdriver.support.expected_conditions import presence_of_element_l
 from selenium.webdriver.support.ui import WebDriverWait
 from seleniumwire import webdriver
 
+from utils import interceptor, get_proxy
+
 TWITCH_URL = 'https://twitch.tv'
 SEARCH_REQUEST = 'Pool'
-USER_AGENT_HEADER = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
-ACCEPT_HEADER = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
 
 logger = logging.getLogger('seleniumwire')
 logger.setLevel(logging.WARNING)
 logging.basicConfig(filename='../twitch_pools.log', level=logging.INFO)
-
-
-def interceptor(request):
-    request.headers['User-Agent'] = USER_AGENT_HEADER
-    request.headers['Accept'] = ACCEPT_HEADER
-
-
-def get_proxy():
-    pass
 
 
 def parse_twitch(search_request: str):

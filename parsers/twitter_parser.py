@@ -6,8 +6,7 @@ import time
 from dotenv import load_dotenv
 from seleniumwire import webdriver
 
-USER_AGENT_HEADER = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
-ACCEPT_HEADER = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+from utils import interceptor
 
 load_dotenv()
 
@@ -24,12 +23,6 @@ class TwitterParser:
         self._username = twitter_username
         self._password = twitter_password
 
-    @staticmethod
-    def _interceptor(request):
-        """ Changes request headers """
-        request.headers['User-Agent'] = USER_AGENT_HEADER
-        request.headers['Accept'] = ACCEPT_HEADER
-
     def login(self, driver):
         login_form = driver.find_element_by_xpath('//form[@action="/sessions"]')
 
@@ -45,7 +38,7 @@ class TwitterParser:
     def parse(self):
         """ Parses last 20 Elon Musk tweets """
         with webdriver.Chrome() as driver:
-            driver.request_interceptor = self._interceptor
+            driver.request_interceptor = interceptor
             driver.get(self.twitter_url)
             login_btn = driver.find_element_by_xpath('//a[@href="/login"]')
             login_btn.click()
