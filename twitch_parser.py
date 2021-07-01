@@ -15,6 +15,8 @@ from seleniumwire import webdriver
 
 TWITCH_URL = 'https://twitch.tv'
 SEARCH_REQUEST = 'Pool'
+USER_AGENT_HEADER = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
+ACCEPT_HEADER = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
 
 logger = logging.getLogger('seleniumwire')
 logger.setLevel(logging.WARNING)
@@ -22,8 +24,8 @@ logging.basicConfig(filename='twitch_pools.log', level=logging.INFO)
 
 
 def interceptor(request):
-    request.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
-    request.headers['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    request.headers['User-Agent'] = USER_AGENT_HEADER
+    request.headers['Accept'] = ACCEPT_HEADER
 
 
 def get_proxy():
