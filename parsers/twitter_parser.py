@@ -5,6 +5,7 @@ import time
 
 from dotenv import load_dotenv
 from seleniumwire import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 from utils import interceptor
 
@@ -52,10 +53,16 @@ class TwitterParser:
             while len(result) < self.num_of_articles:
                 time.sleep(random.uniform(2, 4))
 
-                last_tweet = tweets[-1]
-                text = [tweet.find_element_by_xpath('descendant::div[@role="group"]/preceding-sibling::*[last()]').text for tweet in tweets]
-                result.extend(text)
+                for tweet in tweets:
+                    try:
+                        text = tweet.find_element_by_xpath('descendant::div[@role="group"]/preceding-sibling::*[last()]').text
+                    except NoSuchElementException:
+                        tweets.remove(tweet)
+                        continue
+                    else:
+                        result.append(text)
 
+                last_tweet = tweets[-1]
                 driver.execute_script('arguments[0].scrollIntoView();', last_tweet)
                 time.sleep(random.uniform(2, 4))
                 tweets = last_tweet.find_elements_by_xpath('following-sibling::*')
